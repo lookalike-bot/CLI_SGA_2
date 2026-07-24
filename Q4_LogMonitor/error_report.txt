@@ -1,0 +1,2 @@
+ERROR: Disk full
+ERROR: Connection timeout

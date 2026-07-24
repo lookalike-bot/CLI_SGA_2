@@ -1,0 +1,11 @@
+tail -f: Continuously outputs new lines appended to app.log in real time, rather than exiting after reaching the end of the file, enabling live monitoring.
+
+Pipe (|): Streams tail's live output directly into grep without needing an intermediate file, so filtering happens as data arrives.
+
+grep --line-buffered "ERROR": Filters only lines containing "ERROR" and flushes output line-by-line (rather than buffering in blocks), which is necessary for real-time pipelines so matches appear immediately instead of being delayed.
+
+Redirection (>> error_report.txt): Appends only the matched ERROR lines into a separate report file, keeping the report clean and persistent across runs without overwriting prior entries.
+
+/dev/null: Used with 2>/dev/null to discard any error output from tail itself (e.g., if the log file were temporarily inaccessible), suppressing noise the administrator doesn't need to see, keeping the terminal output focused only on relevant data.
+
+Together, this pipeline achieves real-time, low-overhead log monitoring: only matching lines are processed and stored, irrelevant output is discarded, and the report file accumulates a persistent history of errors.

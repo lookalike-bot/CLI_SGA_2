@@ -1,0 +1,11 @@
+open(): Opens (or creates, via O_CREAT) the file employees.dat with read/write access, returning a file descriptor used by all subsequent calls.
+
+write(): Writes a fixed-size record (50 bytes) directly to the file at the current file offset.
+
+lseek(): Moves the file's read/write pointer to a specific byte offset (index * RECORD_SIZE), enabling direct access to any record's exact position without reading through the file sequentially. This is the key to updating or retrieving a single record efficiently.
+
+read(): Reads exactly RECORD_SIZE bytes from the current offset (set by lseek) into a buffer, allowing retrieval of any specific record on demand.
+
+close(): Releases the file descriptor back to the OS once all operations are complete, ensuring the file's data is properly flushed and resources are not leaked.
+
+Together, fixed-size records + lseek enable direct-access ("random access") file I/O — updating record 1 doesn't require rewriting the whole file, since lseek jumps straight to its byte offset and overwrites just those 50 bytes.

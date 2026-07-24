@@ -1,0 +1,5 @@
+Duplicate Detection: md5sum generates a unique hash for each file's content. Files with identical content produce identical hashes, so comparing hashes (not filenames) reliably identifies true duplicates even if filenames differ.
+
+Redirection Operators: > truncates/creates report.txt and errors.txt fresh at the start of each run. >> appends each new line without overwriting previous entries. 2>> specifically appends only error/stderr output from commands like md5sum or cp if they fail, keeping errors separate from the main report.
+
+File Handling: An associative array (declare -A) stores each unique hash mapped to its filename, allowing O(1) lookups to check if a hash was already seen — an efficient way to track "uniqueness" across potentially hundreds of student files.

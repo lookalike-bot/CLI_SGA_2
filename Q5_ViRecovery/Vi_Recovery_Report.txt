@@ -1,0 +1,21 @@
+Evaluation of vi Recovery Mechanisms
+
+1. Swap Files (.filename.swp):
+vi automatically creates a hidden swap file the moment editing begins, continuously recording changes before they're saved. If the system crashes, running "vi -r filename" detects and offers to recover the swap file, restoring most or all unsaved changes. This is the most immediately useful mechanism for a sudden crash, since it requires no prior setup and captures work in near real-time.
+
+2. Undo History:
+vi maintains an in-memory undo buffer (u to undo, Ctrl+R to redo) during a session. However, this history exists only in memory and is lost entirely on a crash, since it is never written to disk. It cannot help recover from a crash on its own.
+
+3. Registers:
+Registers store copied/deleted text snippets during editing (e.g., "ayy to yank into register a). Like undo history, registers are session-memory only and do not persist through a crash, so they offer no crash-recovery benefit.
+
+4. Backup Files (~filename or .bak):
+If configured (set backup in .vimrc), vi creates a backup of the previous saved version before overwriting it on the next save. This protects against a bad save overwriting good prior work, but it does NOT protect unsaved changes made after the last save — it only preserves what was already saved before.
+
+5. Auto-Recovery / Persistent Undo:
+Some vi/vim configurations support persistent undo (set undofile), which writes undo history to disk continuously. If enabled, this can preserve undo state across crashes, unlike ordinary undo history.
+
+Recommended Strategy:
+The swap file mechanism is the most reliable general-purpose recovery method, since it is enabled by default, requires no configuration, and directly targets the exact problem described (unsaved changes lost to a crash). It captures the file's content close to real-time as edits happen. 
+
+For maximum protection, combining swap files (default, crash recovery) with persistent undo (set undofile in .vimrc) gives the best coverage: swap files recover the file content itself, while persistent undo preserves the edit history/timeline across sessions. Backup files are a useful supplementary safeguard against bad saves, but do not address the specific unsaved-crash scenario described in the question. Registers and standard undo history are not viable recovery mechanisms in this context since they are memory-only and do not survive a crash.

@@ -1,0 +1,7 @@
+Process Creation: fork() creates a child process that is a copy of the parent. It returns 0 in the child and the child's PID in the parent, allowing each branch to run different code.
+
+Waiting: waitpid(-1, &status, WNOHANG) lets the parent check on any child without blocking, so it can monitor all children concurrently in a loop rather than waiting on just one. WNOHANG returns immediately if no child has exited yet.
+
+Signal Handling: kill(pid, SIGTERM) requests graceful termination of an unresponsive child. If it doesn't respond in time, SIGKILL forces immediate termination, since SIGKILL cannot be caught or ignored by the process.
+
+Zombie Prevention: A child that exits becomes a zombie until the parent calls wait()/waitpid() to read its exit status. By continuously calling waitpid() in a loop (including a final cleanup loop), the parent ensures no child is left as an unreaped zombie, freeing its process table entry.

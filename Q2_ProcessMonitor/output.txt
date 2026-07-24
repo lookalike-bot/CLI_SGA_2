@@ -1,0 +1,10 @@
+Child 0 started, PID: 18234
+Child 0 (PID 18234) finished work.
+Child 1 started, PID: 18235
+Child 1 (PID 18235) finished work.
+Child 2 started, PID: 18236
+Child 2 (PID 18236) finished work.
+Parent: Child PID 18234 exited normally with status 0
+Parent: Child PID 18235 exited normally with status 0
+Parent: Child PID 18236 exited normally with status 0
+Parent: All children processed. Exiting.
